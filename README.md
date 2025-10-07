@@ -195,7 +195,7 @@ NOTE: On the current version the programm must be reached via http://localhost:4
 | Attribute | Details |
 | :--- | :--- |
 | **Applicant** | Kees |
-| **Total Implementation Time** | **Approx. 100 Hours** (across 7 days) |
+| **Total Implementation Time** | **Approx. 100 Hours** (across 6 days) |
 | **Technology Stack** | .NET 9 • EF Core • PostgreSQL • Angular 20 • PrimeNG • Chart.js • Docker |
 
 **Note on Time Commitment:** The depth of this implementation, including the full-stack architecture, comprehensive documentation, and production readiness, required this substantial time investment to fully demonstrate my skills for the role.
