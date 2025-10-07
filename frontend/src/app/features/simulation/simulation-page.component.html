@@ -1,0 +1,30 @@
+<div class="simulation-container">
+  <h2>📈 Edelmetall Simulation</h2>
+  <p class="subtitle">
+    Simuliere die Wertentwicklung deines Sparplans basierend auf historischen Kursen.
+  </p>
+
+  <div class="form-panel">
+    <p-select [(ngModel)]="selectedMetal" [options]="metals" placeholder="Metall wählen"></p-select>
+
+    <input
+      type="number"
+      pInputText
+      [(ngModel)]="monthlyRate"
+      placeholder="Monatliche Rate (€)" />
+
+    <p-datepicker [(ngModel)]="from" dateFormat="yy-mm-dd" placeholder="Von"></p-datepicker>
+    <p-datepicker [(ngModel)]="to" dateFormat="yy-mm-dd" placeholder="Bis"></p-datepicker>
+
+    <button pButton label="Simulation starten" icon="pi pi-chart-line"
+            (click)="simulate()" [disabled]="loading"></button>
+  </div>
+
+  <div class="chart-wrapper" *ngIf="results.length > 0">
+    <p-chart type="line" [data]="chartData" [options]="chartOptions"></p-chart>
+  </div>
+
+  <div *ngIf="!loading && results.length === 0" class="no-results">
+    Keine Simulationsergebnisse vorhanden. Bitte starte eine Simulation.
+  </div>
+</div>

@@ -1,0 +1,106 @@
+<div class="depots-container">
+  <h2>🏦 Depots Übersicht</h2>
+
+  <!-- Actions -->
+  <div class="action-buttons">
+    <p-button
+      label="Depot erstellen"
+      icon="pi pi-plus"
+      (click)="createDepot()"
+    ></p-button>
+
+    <p-button
+      label="Aktualisieren"
+      icon="pi pi-refresh"
+      class="ml-2"
+      (click)="load()"
+    ></p-button>
+  </div>
+
+  <!-- Status Info -->
+  <div *ngIf="lastCreatedDepotId || lastAddedSparplanId" class="status-info">
+    <p *ngIf="lastCreatedDepotId">
+      🆕 <strong>Letztes erstelltes Depot:</strong> {{ lastCreatedDepotId }}
+    </p>
+    <p *ngIf="lastAddedSparplanId">
+      ➕ <strong>Letzter hinzugefügter Sparplan:</strong>
+      {{ lastAddedSparplanId }} <br />
+      📦 <em>Depot:</em> {{ lastAddedDepotId }}
+    </p>
+  </div>
+
+  <!-- Depots Table -->
+  <p-table [value]="depots" [loading]="loading" dataKey="id" expandableRows>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Sparpläne</th>
+        <th>Aktionen</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-depot>
+      <tr>
+        <td>{{ depot.id }}</td>
+        <td>{{ depot.sparplaene?.length || 0 }}</td>
+        <td>
+          <div class="add-sparplan-row">
+            <select
+              [(ngModel)]="depot.selectedMetal"
+              class="p-inputtext-sm"
+            >
+              <option *ngFor="let metal of metalOptions" [value]="metal.value">
+                {{ metal.label }}
+              </option>
+            </select>
+
+            <input
+              pInputText
+              type="number"
+              [(ngModel)]="depot.selectedRate"
+              placeholder="Rate (€)"
+              class="p-inputtext-sm"
+              style="width: 90px; margin-left: 4px;"
+            />
+
+            <p-button
+              icon="pi pi-plus-circle"
+              label="Hinzufügen"
+              size="small"
+              styleClass="ml-2"
+              (click)="addSparplan(depot.id, depot.selectedMetal || metalOptions[0].value, depot.selectedRate || 100)"
+            ></p-button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="expandedRow" let-depot>
+      <div class="p-3">
+        <h4>Sparpläne von Depot {{ depot.id }}</h4>
+
+        <p-table [value]="depot.sparplaene" *ngIf="depot.sparplaene?.length">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Metall</th>
+              <th>Rate (€)</th>
+              <th>Startdatum</th>
+              <th>Aktiv</th>
+              <th>Saldo (Barren)</th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-sp>
+            <tr>
+              <td>{{ sp.metal }}</td>
+              <td>{{ sp.monthlyRate | number: '1.2-2' }}</td>
+              <td>{{ sp.startDate | date: 'mediumDate' }}</td>
+              <td>{{ sp.isActive ? 'Ja' : 'Nein' }}</td>
+              <td>{{ sp.balanceInBars | number: '1.5-5' }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </ng-template>
+  </p-table>
+</div>

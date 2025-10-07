@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+//NOTE: Do not add any primeng imports here, v>=20 not more support this.
+body, html {
+  background-color: #ec8f8f;
+  color: #222;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,82 @@
+<div class="sparplaene-container">
+  <h2>📈 Sparpläne Übersicht</h2>
+
+  <!-- Creation Form -->
+  <div class="create-form">
+    <h4>➕ Neuen Sparplan erstellen</h4>
+
+    <div class="form-grid">
+      <div class="field">
+        <label for="depot">Depot ID</label>
+        <input
+          pInputText
+          id="depot"
+          placeholder="Depot ID eingeben"
+          [(ngModel)]="newSparplan.depotId"
+        />
+      </div>
+
+      <div class="field">
+        <label for="metal">Metall</label>
+        <select
+          id="metal"
+          class="p-inputtext p-component"
+          [(ngModel)]="newSparplan.metal"
+        >
+          <option *ngFor="let metal of metalOptions" [value]="metal.value">
+            {{ metal.label }}
+          </option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="rate">Monatliche Rate (€)</label>
+        <input
+          pInputText
+          id="rate"
+          type="number"
+          [(ngModel)]="newSparplan.monthlyRate"
+        />
+      </div>
+
+      <div class="field action">
+        <p-button
+          label="Sparplan erstellen"
+          icon="pi pi-check"
+          (click)="createSparplan()"
+        ></p-button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Status Info -->
+  <div *ngIf="lastCreatedSparplanId" class="status-info">
+    🆕 <strong>Letzter Sparplan:</strong> {{ lastCreatedSparplanId }}  
+    📦 <em>(Depot {{ lastUsedDepotId }})</em>
+  </div>
+
+  <!-- Sparpläne Table -->
+  <p-table [value]="sparplaene" [loading]="loading">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Sparplan ID</th>
+        <th>Metall</th>
+        <th>Rate (€)</th>
+        <th>Startdatum</th>
+        <th>Aktiv</th>
+        <th>Saldo (Barren)</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-sp>
+      <tr>
+        <td>{{ sp.id }}</td>
+        <td>{{ sp.metal }}</td>
+        <td>{{ sp.monthlyRate | number: '1.2-2' }}</td>
+        <td>{{ sp.startDate | date: 'mediumDate' }}</td>
+        <td>{{ sp.isActive ? 'Ja' : 'Nein' }}</td>
+        <td>{{ sp.balanceInBars | number: '1.5-5' }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

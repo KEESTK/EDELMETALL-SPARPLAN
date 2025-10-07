@@ -1,0 +1,78 @@
+<div class="transactions-container">
+  <h2>💳 Transaktionen verwalten</h2>
+
+  <!-- Sparplan ID input -->
+  <div class="field">
+    <label for="sparplanId">Sparplan-ID:</label>
+    <input id="sparplanId" type="text" [(ngModel)]="sparplanId" placeholder="UUID eingeben" pInputText />
+    <p-button label="Laden" icon="pi pi-search" (click)="loadTransactions()"></p-button>
+  </div>
+
+  <!-- Deposit -->
+  <div class="action-section">
+    <h3>💰 Einzahlung tätigen</h3>
+    <input type="number" [(ngModel)]="depositAmount" placeholder="Betrag (€)" pInputText />
+    <p-button label="Einzahlen" icon="pi pi-plus" (click)="deposit()"></p-button>
+  </div>
+
+  <!-- Fee -->
+  <div class="action-section">
+    <h3>🏦 Quartalsgebühr abbuchen</h3>
+    <p-button label="Gebühr buchen" icon="pi pi-percentage" (click)="bookFee()"></p-button>
+  </div>
+
+  <!-- Close Request -->
+  <div class="action-section">
+    <h3>🛑 Sparplan beenden</h3>
+    <p-button
+      label="Beendigung anfragen"
+      icon="pi pi-times-circle"
+      (click)="requestClose()"
+    ></p-button>
+
+    <div *ngIf="closeInfo" class="close-info">
+      <p><strong>Metall:</strong> {{ closeInfo.metal }}</p>
+      <p><strong>Saldo (Barren):</strong> {{ closeInfo.bars }}</p>
+      <p>
+        <strong>Auszahlungsbetrag:</strong>
+        {{ closeInfo.estimatedPayout | number: '1.2-2' }} €
+      </p>
+
+      <h4>💶 Auszahlung bestätigen</h4>
+      <input
+        type="text"
+        [(ngModel)]="bankAccount"
+        placeholder="IBAN eingeben"
+        pInputText
+      />
+      <p-button
+        label="Bestätigen"
+        icon="pi pi-check"
+        (click)="confirmClose()"
+      ></p-button>
+    </div>
+  </div>
+
+
+  <!-- Transaction Table -->
+  <p-table [value]="transactions" [loading]="loading">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Typ</th>
+        <th>Betrag (€)</th>
+        <th>Barren</th>
+        <th>Datum</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-tx>
+      <tr>
+        <td>{{ tx.id }}</td>
+        <td>{{ tx.type }}</td>
+        <td>{{ tx.amountInCurrency | number:'1.2-2' }}</td>
+        <td>{{ tx.amountInBars | number:'1.5-5' }}</td>
+        <td>{{ tx.date | date:'medium' }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

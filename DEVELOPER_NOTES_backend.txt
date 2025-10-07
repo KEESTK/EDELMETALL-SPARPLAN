@@ -1,0 +1,52 @@
+______________________________________________________________
+DEVELOPER  NOTES: IMPORTANT HISTORY
+_____________________________________________________________
+__________________________
+Erste Migration erstellen
+
+Zurück ins Root vom Backend:
+cd backend/src/Sparplan.Api
+dotnet ef migrations add InitialCreate -p ../Sparplan.Infrastructure -s Sparplan.Api
+dotnet ef database update -p ../Sparplan.Infrastructure -s Sparplan.Api
+
+Das erzeugt die Tabellen in der Postgres-DB (sparplan_db).
+___________________________
+
+Im Ordner backend/src/Sparplan.Api ausführen:
+
+dotnet add package Microsoft.EntityFrameworkCore --version 9.0.0
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --version 9.0.0
+
+___________________________
+
+Im Sparplan.Api Projekt installieren:
+
+cd backend/src/Sparplan.Api
+dotnet add package Swashbuckle.AspNetCore --version 6.5.0
+_____________________________
+Migration anlegen
+dotnet tool install --global dotnet-ef
+Ausführen im Root (backend/):
+cd backend
+dotnet ef migrations add InitialCreate -p src/Sparplan.Infrastructure -s src/Sparplan.Api
+docker-compose up -d db
+dotnet ef database update -p src/Sparplan.Infrastructure -s src/Sparplan.Api
+
+__________________________
+Migration neu erstellen & anwenden:
+cd backend
+dotnet ef migrations add FixTransactionsRelation -p src/Sparplan.Infrastructure -s src/Sparplan.Api
+dotnet ef database update -p src/Sparplan.Infrastructure -s src/Sparplan.Api
+__________________________
+
+cd backend
+Neue Migration erstellen:
+dotnet ef migrations add AddTransactionSparplanRelation -p src/Sparplan.Infrastructure -s src/Sparplan.Api
+
+Migration anwenden:
+docker-compose up -d db
+dotnet ef database update -p src/Sparplan.Infrastructure -s src/Sparplan.Api
+__________________________
+Bestehende fehlerhafte Migration entfernen:
+dotnet ef database drop -p src/Sparplan.Infrastructure -s src/Sparplan.Api
+dotnet ef database update -p src/Sparplan.Infrastructure -s src/Sparplan.Api

@@ -1,0 +1,67 @@
+______________________________________________________________
+DEVELOPER  NOTES: IMPORTANT HISTORY
+_____________________________________________________________
+__________________________
+(1) Provided backend is running & reachable at http://localhost:5001
+(a) From Project root, I create an Angular 18 app called edelmetall-frontend in frontend/ with routing + SCSS.
+mkdir -p frontend
+
+docker run --rm -it -v "$PWD/frontend":/app node:20-alpine sh -lc \
+"npm i -g @angular/cli@18 && cd /app && ng new edelmetall-frontend --directory . --skip-git --style=scss --routing=true --skip-install --force"
+
+ Do you want to enable Server-Side Rendering (SSR) and Static 
+Site Generation (SSG/Prerendering)? yes
+
+(b) Install deps:
+docker run --rm -it -v "$PWD/frontend":/app node:20-alpine sh -lc "cd /app && npm install --legacy-peer-deps"
+
+Once I made sure it was functioning, I creaded a docker file, added nginx.conf and updated my docker-compose.
+
+(2) created a dedicated features folder
+(a) From root folder I ran;
+docker run --rm -it -v "$PWD/frontend":/app node:20-alpine sh -lc \
+"cd /app && npx ng generate component features/sparplaene/sparplaene-list --skip-tests && npx ng generate service features/sparplaene/sparplaene"
+then I made sure that the structure below is respected:
+
+src/app/features/sparplaene/
+│
+├── sparplaene-list.component.ts
+├── sparplaene-list.component.html
+├── sparplaene-list.component.scss
+├── sparplaene.service.ts
+└── models/sparplan.model.ts
+
+(b) from root folder I ran 
+docker run --rm -it -v "$PWD/frontend":/app node:20-alpine sh -lc \
+"cd /app && npm install primeng@20 primeicons@7 @angular/animations --legacy-peer-deps"
+
+(c) I upgraded to angular 20 due to some build errors
+docker run --rm -it -v "$PWD/frontend":/app node:20 sh -lc \
+"cd /app && npm install primeng@20 primeicons@7 @angular/animations@20 @angular/forms@20 @angular/platform-browser@20 --legacy-peer-deps"
+
+docker run --rm -it -v "$PWD/frontend":/app node:20 sh -lc \
+"cd /app && rm -rf node_modules package-lock.json && npm install --legacy-peer-deps && npm run build"
+
+18->19
+docker run --rm -it -v "$PWD/frontend":/app node:20 sh -lc \
+"cd /app && npx @angular/cli@20 update @angular/core@20 @angular/cli@20 --force"
+
+19->20
+docker run --rm -it -v "$PWD/frontend":/app node:20 sh -lc \
+"cd /app && rm -rf node_modules package-lock.json && npm install primeng@20 primeicons@7 @angular/animations@20 @angular/forms@20 @angular/platform-browser@20 --legacy-peer-deps"
+
+clean reinstall
+docker run --rm -it -v "$PWD/frontend":/app node:20 sh -lc \
+"cd /app && rm -rf node_modules package-lock.json && npm install --legacy-peer-deps"
+
+version verify
+docker run --rm -it -v "$PWD/frontend":/app node:20 sh -lc \
+"cd /app && npm ls @angular/core primeng"
+
+(3) if testing frontend locally without docker, you could run
+ ng serve --proxy-config proxy.conf.json
+This mirrors the same /api behavior (inside docker-compose) locally
+
+(4) I removed everything related to SSR
+
+(5) localy installed: npm install chart.js chartjs-plugin-zoom chartjs-adapter-date-fns  --legacy-peer-deps

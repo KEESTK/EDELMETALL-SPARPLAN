@@ -1,0 +1,32 @@
+# ----------------------------------------
+# General Git Ignore
+# ----------------------------------------
+.DS_Store
+*.log
+# Environment variables
+.env
+.env.*
+*.json.bak
+# Docker
+/docker-compose.override.yml
+# ----------------------------------------
+# .NET / C# Specific
+# ----------------------------------------
+# Build folders
+[Bb]in/
+[Oo]bj/
+# Visual Studio temporary files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+# NuGet
+.nuget/
+# ----------------------------------------
+# Angular / Node Specific )
+# ----------------------------------------
+/frontend/node_modules
+/frontend/dist
+/frontend/.angular/cache
+npm-debug.log*
+yarn-error.log

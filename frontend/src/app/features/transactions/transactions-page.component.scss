@@ -1,0 +1,129 @@
+:host {
+  display: block;
+  padding: 2rem;
+  background-color: #f8fafc;
+  color: #222;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  line-height: 1.5;
+}
+
+h2 {
+  color: #1f8bf7;
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+h3, h4 {
+  color: #1f8bf7;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+
+  label {
+    font-weight: 500;
+    width: 140px;
+  }
+
+  input {
+    flex: 1;
+  }
+}
+
+.action-section {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+
+  h3 {
+    flex-basis: 100%;
+    font-size: 1.2rem;
+  }
+
+  input[type='number'],
+  input[type='text'] {
+    max-width: 200px;
+  }
+}
+
+.close-info {
+  background-color: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+  color: #0369a1;
+
+  p {
+    margin: 0.25rem 0;
+  }
+
+  h4 {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    color: #075985;
+  }
+}
+
+p-table {
+  margin-top: 2rem;
+
+  th {
+    background-color: #1f8bf7;
+    color: #fff;
+    font-weight: 500;
+    text-align: left;
+  }
+
+  td {
+    background: #ffffff;
+  }
+
+  tr:nth-child(even) td {
+    background: #f1f5f9;
+  }
+
+  tr:hover td {
+    background: #e0f2fe;
+  }
+}
+
+.p-button {
+  background-color: #1f8bf7;
+  border: none;
+  color: #fff;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #0f6edc;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(31, 139, 247, 0.3);
+  }
+}
+
+.action-section .p-button {
+  height: 2.4rem;
+}
+
+.transactions-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
