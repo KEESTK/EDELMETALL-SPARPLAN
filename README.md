@@ -1,3 +1,6 @@
+# EDELMETALL-SPARPLAN
+Es ist eine Software zu entwickeln, die das einfache Abschließen und Beenden von Edelmetall- Sparplänen ermöglicht. 
+
 # 💰 Edelmetall-Sparplan Backend
 
 ![.NET](https://img.shields.io/badge/.NET-9.0-blueviolet)
