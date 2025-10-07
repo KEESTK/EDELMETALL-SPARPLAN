@@ -16,7 +16,7 @@ namespace Sparplan.Api.DTOs
             new SparplanDto
             {
                 Id = sparplan.Id,
-                Metal = sparplan.Metal, // MetalType bleibt Enum (wird in Swagger als String gezeigt dank JsonStringEnumConverter)
+                Metal = sparplan.Metal,
                 MonthlyRate = sparplan.MonthlyRate,
                 StartDate = sparplan.StartDate,
                 IsActive = sparplan.IsActive,

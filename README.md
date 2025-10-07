@@ -1,180 +1,194 @@
 # EDELMETALL-SPARPLAN
 Es ist eine Software zu entwickeln, die das einfache Abschließen und Beenden von Edelmetall- Sparplänen ermöglicht. 
+---
 
-# 💰 Edelmetall-Sparplan Backend
+# 🪙 Edelmetall-Sparplan
 
-![.NET](https://img.shields.io/badge/.NET-9.0-blueviolet)
-![EF Core](https://img.shields.io/badge/Entity%20Framework%20Core-9.0-green)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue)
-![Docker](https://img.shields.io/badge/Docker-Ready-blue)
-![License](https://img.shields.io/badge/License-MIT-lightgrey)
-
-Dieses Projekt implementiert ein **Banking-Backend für Edelmetall-Sparpläne**.  
-Es basiert auf **.NET 9**, **Entity Framework Core** und **PostgreSQL** und folgt einem klaren **DDD-Schichtenmodell**.
+**Eine vollständige Web-Anwendung zur Verwaltung von Edelmetall-Sparplänen (Gold & Silber)**
+Frontend (Angular + PrimeNG) • Backend (.NET 9 + EF Core + PostgreSQL) • Containerisiert mit Docker
 
 ---
 
-## 🚀 Features
-- **Depots** als Container für Sparpläne  
-- **Sparpläne** für Gold und Silber  
-- **Transaktionen**: Einzahlung (Deposit), Gebühr (Fee), Auszahlung (Payout)  
-- REST-API mit **Swagger/OpenAPI**  
-- Persistenz mit **PostgreSQL** via EF Core  
+## 💼 Ziel der Anwendung
+
+Die Software ermöglicht es, **Depots** anzulegen, **Sparpläne** zu erstellen, **Transaktionen** (Einzahlungen, Gebühren, Schließungen) durchzuführen und **Simulationen** der Wertentwicklung auf Basis historischer Kursdaten darzustellen.
+Sie deckt damit den gesamten Lebenszyklus eines Edelmetall-Sparplans ab – von der Eröffnung bis zur Auszahlung.
 
 ---
 
-## 🏗 Architekturübersicht
+## ⚙️ Technologie-Stack
+
+| Komponente            | Technologie                                              |
+| --------------------- | -------------------------------------------------------- |
+| **Frontend**          | Angular 20 • PrimeNG • Chart.js • TypeScript             |
+| **Backend**           | .NET 9 • ASP.NET Core WebAPI • Entity Framework Core     |
+| **Datenbank**         | PostgreSQL 16                                            |
+| **Containerisierung** | Docker • Docker Compose                                  |
+| **Architektur**       | Domain Driven Design (DDD) mit klarer Schichten-Trennung |
+
+---
+
+## 🚀 Haupt-Features
+
+### Backend
+
+* ✅ REST-API für Depots, Sparpläne und Transaktionen
+* ✅ Transaktionstypen: Einzahlung, Gebühr, Sparplan schließen (Request + Confirm)
+* ✅ DDD-Struktur mit Domain-Klassen (Depot, Sparplan, Transaction, MetalType)
+* ✅ Swagger UI / OpenAPI-Dokumentation
+* ✅ Persistenz über PostgreSQL & Entity Framework Core
+* ✅ Docker-Support für API + DB
+
+### Frontend
+
+* ✅ Übersicht aller Depots mit Sparplänen
+* ✅ Inline-Aktionen (Depot erstellen, Sparplan hinzufügen, Transaktion ausführen) — ohne modale Dialoge
+* ✅ Visualisierung von Simulationsergebnissen mit Chart.js (Zoom & Pan)
+* ✅ Dynamische API-Konfiguration über `assets/config.json` (`apiUrl`)
+* ✅ Responsive Layout mit PrimeNG-Komponenten (Button, Table, Select usw.)
+
+---
+
+## 🏗 Architekturüberblick
 
 ```
-┌─────────────────────────────┐
-│        Client / UI          │
-│  (Swagger UI, Frontend,     │
-│   Postman, etc.)            │
-└───────────────▲─────────────┘
-                │ HTTP/REST
-┌───────────────┴─────────────┐
-│       Sparplan.Api           │
-│  ASP.NET Core WebAPI Layer   │
-│  - Controller (REST Endpoints)│
-│  - Swagger/OpenAPI           │
-└───────────────▲─────────────┘
-                │ DI / EF Core
-┌───────────────┴─────────────┐
-│  Sparplan.Infrastructure     │
-│  - AppDbContext (EF Core)    │
-│  - AppDbContextFactory       │
-└───────────────▲─────────────┘
-                │
-┌───────────────┴─────────────┐
-│       PostgreSQL DB          │
-│  - Depots                    │
-│  - Sparplaene                │
-│  - Transactions              │
-└───────────────▲─────────────┘
-                │
-┌───────────────┴─────────────┐
-│     Sparplan.Domain          │
-│  - SparplanClass             │
-│  - Depot                     │
-│  - Transaction + Type        │
-│  - Metal + MetalType         │
-└─────────────────────────────┘
+┌──────────────────────────────────────────────────┐
+│                  Frontend (Angular)              │
+│  - Depot-Übersicht, Sparpläne, Transaktionen     │
+│  - Simulation mit Chart.js + PrimeNG             │
+│  - API-URL über assets/config.json               │
+└───────────────────────▲──────────────────────────┘
+                        │ REST/JSON
+┌───────────────────────┴──────────────────────────┐
+│              Backend (.NET 9 WebAPI)            │
+│  - Controller (Depots, Sparplaene, Transactions) │
+│  - Preisservice, Validierung, DTO-Mapping        │
+│  - Swagger UI, EF Core                          │
+└───────────────────────▲──────────────────────────┘
+                        │ EF Core
+┌───────────────────────┴──────────────────────────┐
+│              PostgreSQL 16 Database             │
+│  - Tables: Depots, Sparplaene, Transactions      │
+│  - Beziehungen: 1 Depot → n Sparplaene → n Tx   │
+└──────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 📂 Projektstruktur
+## 📦 Projektstruktur
 
 ```
-backend/
-│── src/
-│   ├── Sparplan.Api/              # ASP.NET Core API (Controller, Startup, Program)
-│   ├── Sparplan.Infrastructure/   # EF Core DbContext, Migrations, Factory
-│   ├── Sparplan.Domain/           # Domain-Modelle & Business-Logik
-│   └── Sparplan.Application/      # (Option für Services, Business-UseCases)
+edelmetall-sparplan/
 │
-│── Dockerfile                     # Docker Build für API
-│── docker-compose.yml              # Startet Backend + PostgreSQL
-│── Sparplan.sln                   # .NET Solution
+├── backend/
+│   ├── src/
+│   │   ├── Sparplan.Api/              # ASP.NET Core WebAPI
+│   │   ├── Sparplan.Infrastructure/   # EF Core Context + Migrations
+│   │   ├── Sparplan.Domain/           # Domain Model (DDD)
+│   │   └── Sparplan.Application/      # Businesslogik (optionales Layer)
+│   │
+│   ├── Dockerfile                     # Backend Dockerfile
+│   ├── docker-compose.yml             # Backend + PostgreSQL
+│   └── Sparplan.sln
+│
+└── frontend/
+    ├── src/app/features/
+    │   ├── depots/                    # Depotverwaltung
+    │   ├── sparplaene/                # Sparplanverwaltung
+    │   ├── transactions/              # Transaktionen (Deposit/Fee/Close)
+    │   └── simulation/                # Simulation mit Chart.js
+    │
+    ├── assets/config.json             # API-Konfiguration
+    ├── Dockerfile                     # Frontend Build + nginx Serve
+    └── docker-compose.yml             # Frontend + Backend Integration
 ```
 
 ---
 
-## ⚙️ Setup & Start
+## ⚙️ Start (Docker-Compose)
 
 ### Voraussetzungen
-- [.NET 9 SDK](https://dotnet.microsoft.com/download)
-- [Docker](https://www.docker.com/)
 
-### Lokaler Start (mit Docker Compose)
+* Docker & Docker Compose
+* (optional) .NET 9 SDK und Node 20 für lokale Entwicklung
+
+### Starten
+
 ```bash
-# Backend + PostgreSQL starten
+# Im Projektverzeichnis
 docker-compose up --build
 ```
 
-- API erreichbar unter: [http://localhost:5001/swagger](http://localhost:5001/swagger)  
-- Datenbank läuft auf: `localhost:5433`  
-- frontend auf: `localhost:4200`
+Nach dem Start:
 
-### Datenbankmigrationen ausführen
-Falls neue Migrationen notwendig sind:
+| Komponente                     | URL                                                            |
+| ------------------------------ | -------------------------------------------------------------- |
+| **Frontend (Angular + nginx)** | [http://localhost:8080](http://localhost:8080)                 |
+| **Backend API + Swagger UI**   | [http://localhost:5001/swagger](http://localhost:5001/swagger) |
+| **PostgreSQL DB**              | `localhost:5433`                                               |
+
+---
+
+## 🧩 Beispiel-Endpoints
+
+### Depot
+
 ```bash
-dotnet ef migrations add <Name> -p src/Sparplan.Infrastructure -s src/Sparplan.Api
-dotnet ef database update -p src/Sparplan.Infrastructure -s src/Sparplan.Api
+POST /api/depots
+GET  /api/depots
+GET  /api/depots/{id}
+POST /api/depots/{id}/add-sparplan
+```
+
+### Sparplan
+
+```bash
+GET  /api/sparplaene
+GET  /api/sparplaene/{id}
+```
+
+### Transaktionen
+
+```bash
+POST /api/transactions/deposit
+POST /api/transactions/fee
+POST /api/transactions/close/request
+POST /api/transactions/close/confirm
+GET  /api/transactions/{sparplanId}
 ```
 
 ---
 
-## 🔍 API Beispiele
+## 📊 Simulation
 
-### 📦 Depots
-- **Depot erstellen**  
-  `POST /api/depots`  
-  → Erstellt ein leeres Depot.
+Im Frontend kann der Benutzer:
 
-- **Alle Depots abrufen**  
-  `GET /api/depots`  
+1. Metall (Gold / Silber) wählen
+2. Monatliche Rate und Zeitraum definieren
+3. Simulation starten → Chart zeigt:
 
-- **Depot nach Id abrufen**  
-  `GET /api/depots/{id}`  
+   * Einzahlungen (€)
+   * Bestände (Barren)
+   * Marktwert (€)
+   * Gewinn/Verlust (€)
 
-- **Sparplan hinzufügen**  
-  `POST /api/depots/{id}/add-sparplan`  
-  Body:  
-  ```json
-  {
-    "metal": "Gold",
-    "monthlyRate": 200
-  }
-  ```
+Zoom & Pan funktionieren per Mausrad und Touch-Gesten.
 
 ---
 
-### 📋 Sparpläne
-- **Alle Sparpläne abrufen**  
-  `GET /api/sparplaene`  
+## 🔐 Hinweise
 
-- **Sparplan nach Id abrufen**  
-  `GET /api/sparplaene/{id}`  
-
-⚠️ Hinweis: Sparpläne können **nur über ein Depot** angelegt werden.
+* API-URL wird über `frontend/assets/config.json` definiert → z. B. `"apiUrl": "/api"`.
+* POST-Requests erfolgen ausschließlich über das Frontend, kein direkter Swagger-Zugriff erforderlich.
+* Alle Container sind für **lokale Entwicklung** vorgesehen; kein Persistenzvolumen außerhalb von Docker notwendig.
 
 ---
 
-### 💰 Transaktionen
-- **Einzahlung buchen**  
-  `POST /api/transactions/deposit`  
-  ```json
-  {
-    "sparplanId": "uuid",
-    "amountInBars": 1.5,
-    "amountInCurrency": 1000
-  }
-  ```
+## 👨‍💻 Autor & Kontext
 
-- **Gebühr abbuchen**  
-  `POST /api/transactions/fee`  
-  ```json
-  {
-    "sparplanId": "uuid",
-    "amountInBars": 0.5
-  }
-  ```
-
-- **Auszahlung vornehmen**  
-  `POST /api/transactions/payout`  
-  ```json
-  {
-    "sparplanId": "uuid",
-    "payoutValue": 2.0
-  }
-  ```
-
-- **Alle Transaktionen eines Sparplans abrufen**  
-  `GET /api/transactions/{sparplanId}`  
+Bewerberaufgabe **Softwareentwickler Banking 2025**
+Implementiert von: *Kees*
+Technologie-Stack: **.NET 9 • EF Core • PostgreSQL • Angular 20 • PrimeNG • Chart.js • Docker**
 
 ---
 
-## 👤 Author
-- Bewerberaufgabe *Softwareentwickler Banking 2025*  
-- Technologie-Stack: **.NET 9 + EF Core + PostgreSQL + Docker**
