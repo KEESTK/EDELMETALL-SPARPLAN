@@ -127,7 +127,7 @@ Nach dem Start:
 
 | Komponente                     | URL                                                            |
 | ------------------------------ | -------------------------------------------------------------- |
-| **Frontend (Angular + nginx)** | [http://localhost:8080](http://localhost:8080)                 |
+| **Frontend (Angular + nginx)** | [http://localhost:4200](http://localhost:4200)                 |
 | **Backend API + Swagger UI**   | [http://localhost:5001/swagger](http://localhost:5001/swagger) |
 | **PostgreSQL DB**              | `localhost:5433`                                               |
 
@@ -177,7 +177,7 @@ Im Frontend kann der Benutzer:
    * Gewinn/Verlust (€)
 
 Zoom & Pan funktionieren per Mausrad und Touch-Gesten.
-
+NOTE: On the current version the programm must be reached via http://localhost:4200/, automatic redirection happens thereafter to http://localhost:4200/simulation . Other endpoints are navigable from the navigation feature.
 ---
 
 ## 🔐 Hinweise
