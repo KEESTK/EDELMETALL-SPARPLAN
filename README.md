@@ -1,9 +1,13 @@
 # EDELMETALL-SPARPLAN
-Es ist eine Software zu entwickeln, die das einfache Abschließen und Beenden von Edelmetall- Sparplänen ermöglicht. 
+## Licensing and Usage
+**This code is submitted exclusively for the purpose of job application assessment and technical evaluation for the Softwareentwickler C#/.NET Banking position at Software Entwicklung und IT-Dienstleistung GmBH (SPI).**
+
+**All commercial rights, deployment rights, and intellectual property rights remain strictly reserved by the author (KEESTK).**
+
+The recipient (the company) is granted a non-exclusive, non-transferable, and temporary license to review, compile, and execute this code solely to evaluate the applicant's skills. Any other use, including deployment, production use, distribution, or adaptation for commercial purposes, is strictly prohibited unless a formal employment contract is signed and executed.
 ---
 
 # 🪙 Edelmetall-Sparplan
-
 **Eine vollständige Web-Anwendung zur Verwaltung von Edelmetall-Sparplänen (Gold & Silber)**
 Frontend (Angular + PrimeNG) • Backend (.NET 9 + EF Core + PostgreSQL) • Containerisiert mit Docker
 
@@ -184,11 +188,17 @@ Zoom & Pan funktionieren per Mausrad und Touch-Gesten.
 
 ---
 
-## 👨‍💻 Autor & Kontext
+## 👨‍💻 Author & Context
 
-Bewerberaufgabe **Softwareentwickler Banking 2025**
-Implementiert von: *Kees*
-Technologie-Stack: **.NET 9 • EF Core • PostgreSQL • Angular 20 • PrimeNG • Chart.js • Docker**
+**Application Task: Software Developer Banking 2025**
+
+| Attribute | Details |
+| :--- | :--- |
+| **Applicant** | Kees |
+| **Total Implementation Time** | **Approx. 100 Hours** (across 7 days) |
+| **Technology Stack** | .NET 9 • EF Core • PostgreSQL • Angular 20 • PrimeNG • Chart.js • Docker |
+
+**Note on Time Commitment:** The depth of this implementation, including the full-stack architecture, comprehensive documentation, and production readiness, required this substantial time investment to fully demonstrate my skills for the role.
 
 ---
 
